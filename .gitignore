@@ -1,0 +1,14 @@
+# Virtual environments
+task-tracker-env/
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+
+# Env files
+.env
+
+# DB
+db.sqlite3
