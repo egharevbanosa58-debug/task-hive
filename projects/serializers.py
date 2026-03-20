@@ -1,0 +1,10 @@
+from . models import Project
+from rest_framework import serializers
+
+# Serializers go here
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ['id', 'name', 'description', 'created_at']
+        read_only_fields = ['id', 'created_at']

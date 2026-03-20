@@ -24,3 +24,6 @@ class TaskViewSet(ModelViewSet):
     # The automatic tagging function that automatically assigns the logged in user to the created task
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def get_serializer_context(self):
+        return {'request': self.request}

@@ -11,6 +11,9 @@ class Task(models.Model):
         ('DONE', 'Done')
     ]
 
+
+    project = models.ForeignKey('projects.Project', on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
 
     title = models.CharField(max_length=200)
