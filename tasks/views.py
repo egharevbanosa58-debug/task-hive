@@ -41,11 +41,15 @@ class TaskListDetailsView(APIView):
         
     # The get method for the specific task
     def get(self, request, pk):
-        task = self.get_object(pk, request.user)
-        if not task:
-            return Response({ 'error': 'Task Not Found' }, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = TaskSerializer(task)
+        task = Task.object.filter(user=request.user)
+
+        status_param = request.query_params.get('status')
+
+        if status_param:
+            task = task.filter(status=status_param)
+
+        serializer = TaskSerializer(task, many=True)
+
         return Response(serializer.data)
     
     # The Patch method for the specific task
