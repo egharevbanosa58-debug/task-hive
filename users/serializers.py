@@ -39,3 +39,16 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['id', 'username', 'email', 'role']
+
+    
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', {})
+        if 'username' in user_data:
+            instance.user.username = user_data['username']
+        if 'email' in user_data:
+            instance.user.email = user_data['email']
+        instance.user.save()
+
+        instance.role = validated_data.get('role', instance.role)
+        instance.save()
+        return instance

@@ -13,8 +13,8 @@ class ProjectViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     # The Prvacy guard
-    def get_queryset(self, request):
-        projects = Project.objects.filter(user=request.user) # You could just return this right away
+    def get_queryset(self):
+        projects = Project.objects.filter(user=self.request.user) # You could just return this right away
         return projects
     
     # The Automatic Tagging function
