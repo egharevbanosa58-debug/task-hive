@@ -9,7 +9,7 @@ from projects.models import Project
 class Task(models.Model):
     STATUS_CHOICES = [
         ('TODO', 'To Do'),
-        ('IN_PROGRESS', 'In Progress'),
+        ('IN PROGRESS', 'In Progress'),
         ('DONE', 'Done')
     ]
 
