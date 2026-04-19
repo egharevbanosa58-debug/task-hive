@@ -14,6 +14,9 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
+# To modify the expiry date for the tokens
+from datetime import timedelta
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -146,3 +149,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1), # The short lived token
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7), # The long-lived login session
+}
