@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 from dotenv import load_dotenv
 
 # To modify the expiry date for the tokens
@@ -34,7 +35,7 @@ DEBUG = 'RENDER' not in os.environ # Automatically False on Render, True locally
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.getenv('DEBUG') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'task-hive-wkw6.onrender.com', 'https://task-hive-wkw6.onrender.com']
 
 
 # Application definition
@@ -97,10 +98,10 @@ WSGI_APPLICATION = 'ttProject.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite://db.sqlite3', # Falls back to SQLite locally
+        conn_max_age=600,
+    )
 }
 
 
