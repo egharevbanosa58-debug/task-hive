@@ -38,6 +38,7 @@ DEBUG = 'RENDER' not in os.environ # Automatically False on Render, True locally
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'task-hive-wkw6.onrender.com', 'https://task-hive-wkw6.onrender.com']
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -70,8 +71,9 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000"
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://task-hive-wkw6.onrender.com',
 ]
 
 ROOT_URLCONF = 'ttProject.urls'
@@ -95,15 +97,22 @@ WSGI_APPLICATION = 'ttProject.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite://db.sqlite3', # Falls back to SQLite locally
-        conn_max_age=600,
-    )
-}
-
+# Check if you are on Render, otherwise use your local environment variables
+if os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600
+        )
+    }
+else:
+    # This is a fallback so your project doesn't crash locally if variables are missing
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
